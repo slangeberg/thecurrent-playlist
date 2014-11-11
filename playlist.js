@@ -34,6 +34,7 @@ if (Meteor.isServer) {
             return {
                 artist: $el.find('.artist').text(),
                 title: $el.find('.title').text(),
+                album_art: $el.find('.album-art').attr('src'),
                 date: $time.attr('datetime'),
                 time: $time.text()
             };
