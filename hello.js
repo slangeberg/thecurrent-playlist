@@ -29,7 +29,7 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-  var cheerio =  Meteor.require('cheerio');
+  var cheerio =  Meteor.npmRequire('cheerio');
 
   Meteor.methods({
     playlist: function() {
@@ -69,4 +69,12 @@ if (Meteor.isServer) {
       console.error("Unable to fetch playlist.", ex);
     }
   });
-} 
+}
+
+Router.route('/api', {where: 'server'})
+  .get(function () {
+    this.response.end('get request\n');
+  })
+  .post(function () {
+    this.response.end('post request\n');
+  });
