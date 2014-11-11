@@ -25,14 +25,18 @@ if (Meteor.isServer) {
         $ = cheerio.load(Meteor.http.get("http://www.thecurrent.org/playlist").content);
 
         var list = [];
-        var articles = $('.row.song'); //'''article');
+        var articles = $('article.row.song'); //'article');
 
         list = $('.row.song').map(function(i, el) {
             // this === el
-            var title = $(this).find('.title');
-            //console.log("title: ", title);
-
-            return {title: title.text()};
+            var $el = $(el);
+            var $time = $el.find('time');
+            return {
+                artist: $el.find('.artist').text(),
+                title: $el.find('.title').text(),
+                date: $time.attr('datetime'),
+                time: $time.text()
+            };
 
         }).get();
 
@@ -79,6 +83,7 @@ Router.route('/api', {where: 'server'})
 
         console.log("/api - list.len: ", list.length);
 
+        this.response.setHeader("Content-Type", "application/json");
         this.response.end(JSON.stringify(list));
     })
     .post(function () {
