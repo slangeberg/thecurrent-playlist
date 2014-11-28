@@ -65,6 +65,24 @@ Router.route('/', function () {
 });
 Router.route('/api', {where: 'server'})
     .get(function () {
+
+//--> Todo: Find existing discovery service?
+
+        var api = {
+            description: "REST API for thecurrent.org/playlist",
+            links: [
+                {
+                    description: "Get latest playlist",
+                    link: "/api/list"
+                }
+            ]
+        }
+
+        this.response.setHeader("Content-Type", "application/json");
+        this.response.end(JSON.stringify(api));
+    });
+Router.route('/api/list', {where: 'server'})
+    .get(function () {
         /*
          this.response.statusCode = 200;
          this.response.setHeader("Content-Type", "application/json");
